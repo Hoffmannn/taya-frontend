@@ -17,6 +17,7 @@ import {
 import { getCEP } from "../api/cep";
 import { ArrowBack } from "@mui/icons-material";
 import { DatePicker } from "@mui/x-date-pickers";
+import { useEffect } from "react";
 
 const UserPage = () => {
   const dispatch = useDispatch();
@@ -52,6 +53,10 @@ const UserPage = () => {
     dispatch(actions.saveUser.request(values));
   };
 
+  useEffect(() => {
+    formProps.reset(initialValues);
+  }, [data]);
+
   if (loading) {
     return <div>Carregando usuário</div>;
   }
@@ -79,6 +84,7 @@ const UserPage = () => {
           <DatePicker
             label="Data de Nascimento"
             name={"dataNascimento"}
+            defaultValue={initialValues.dataNascimento}
             onChange={(e) => formProps.setValue("dataNascimento", e)}
           />
           <ZipCodeTextField
@@ -87,6 +93,7 @@ const UserPage = () => {
             onChange={handleZipcodeChange}
             onBlur={handleCEPSearch}
             customInput={TextField}
+            defaultValue={initialValues.cep}
           />
 
           <ControlledTextField
