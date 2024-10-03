@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { actions } from "../reducers/user.actions";
+import { actions as homeActions } from "../reducers/home.actions";
 import {
   actions as routeActions,
   types as routes,
@@ -49,8 +50,8 @@ const UserPage = () => {
       }
     });
   };
-  const handleSubmit = (values) => {
-    dispatch(actions.saveUser.request(values));
+  const handleSubmit = () => {
+    dispatch(homeActions.saveUser.request(formProps.getValues()));
   };
 
   useEffect(() => {
@@ -108,7 +109,12 @@ const UserPage = () => {
             formProps={formProps}
             InputLabelProps={{ shrink: true }}
           />
-          <Button type="submit" variant="contained" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            variant="contained"
+            onClick={handleSubmit}
+            disabled={loading}
+          >
             Salvar
           </Button>
         </form>

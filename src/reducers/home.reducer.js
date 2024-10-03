@@ -20,6 +20,30 @@ const reducer = (state = initialState, action) => {
               )
             : [],
       };
+    case actions.saveUser.REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.saveUser.SUCCESS:
+      const newUser = action.payload.values;
+
+      return {
+        ...state,
+        data: [...state.data, newUser],
+        loading: false,
+      };
+    case actions.saveUser.FAILURE:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case actions.deleteUser.SUCCESS:
+      return {
+        ...state,
+        data: state.data.filter((user) => user.id !== action.payload.values.id),
+      };
     default:
       return state;
   }

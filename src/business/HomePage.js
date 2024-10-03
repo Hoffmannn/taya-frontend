@@ -15,10 +15,15 @@ import {
   Typography,
 } from "@mui/material";
 import { calculateAge } from "../utils/dateUtils";
+import { actions } from "../reducers/home.actions";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const { loading, data } = useSelector((state) => state.home);
+
+  const handleDeleteUser = (values) => {
+    dispatch(actions.deleteUser.request(values));
+  };
 
   if (loading) {
     return <div>Carregando usuários</div>;
@@ -59,7 +64,7 @@ const HomePage = () => {
                     />
                   </IconButton>
                   <IconButton>
-                    <DeleteOutline />
+                    <DeleteOutline onClick={() => handleDeleteUser(user)} />
                   </IconButton>
                 </TableCell>
               </TableRow>

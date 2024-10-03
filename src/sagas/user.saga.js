@@ -6,6 +6,7 @@ import {
   actions as routeActions,
 } from "../reducers/routes.actions";
 import { actions } from "../reducers/user.actions";
+import { actions as homeActions } from "../reducers/home.actions";
 import { request } from "../utils/api";
 import usersMock from "./users.mock";
 
@@ -35,7 +36,7 @@ const loadUser = asyncFlow({
 });
 
 const saveUser = asyncFlow({
-  actionGenerator: actions.saveUser,
+  actionGenerator: homeActions.saveUser,
   transform: function* (payload) {
     const id = yield select((state) => state.user.id);
     return { id, ...payload };

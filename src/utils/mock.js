@@ -5,7 +5,7 @@ export const mock = (value) => {
         resolve({
           data: value,
         }),
-      2500
+      200
     );
   });
 };
