@@ -79,7 +79,6 @@ const UserPage = () => {
           <DatePicker
             label="Data de Nascimento"
             name={"dataNascimento"}
-            format="DD/MM/YYYY"
             onChange={(e) => formProps.setValue("dataNascimento", e)}
           />
           <ZipCodeTextField
