@@ -15,7 +15,9 @@ const reducer = (state = initialState, action) => {
         loading: action.type === actions.loadUsers.REQUEST,
         data:
           action.type === actions.loadUsers.SUCCESS
-            ? action.payload.response.data
+            ? action.payload.response.data.sort(
+                (a, b) => a.dataNascimento - b.dataNascimento
+              )
             : [],
       };
     default:

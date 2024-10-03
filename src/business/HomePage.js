@@ -4,6 +4,17 @@ import {
   types as routes,
 } from "../reducers/routes.actions";
 import { DeleteOutline, Edit } from "@mui/icons-material";
+import {
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
+import { calculateAge } from "../utils/dateUtils";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -14,41 +25,49 @@ const HomePage = () => {
   }
 
   return (
-    <>
-      <h2>Usuários</h2>
-      <table>
-        <thead>
-          <tr>
-            <td>Nome</td>
-            <td>Cidade/UF</td>
-            <td>Ações</td>
-          </tr>
-        </thead>
+    <Paper>
+      <Typography variant="h4" textAlign="center">
+        Usuários
+      </Typography>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell variant="header">Nome</TableCell>
+            <TableCell variant="header">Idade</TableCell>
+            <TableCell variant="header">Cidade/UF</TableCell>
+            <TableCell variant="header">Ações</TableCell>
+          </TableRow>
+        </TableHead>
 
-        <tbody>
-          {data.map((u) => {
+        <TableBody>
+          {data.map((user) => {
             return (
-              <tr key={u.id}>
-                <td>{u.nome}</td>
-                <td>
-                  {u.cidade}/{u.uf}
-                </td>
-                <td>
-                  <Edit
-                    onClick={() =>
-                      dispatch(
-                        routeActions.redirectTo(routes.USER, { id: u.id })
-                      )
-                    }
-                  />
-                  <DeleteOutline />
-                </td>
-              </tr>
+              <TableRow key={user.id} variant="data">
+                <TableCell>{user.nome}</TableCell>
+                <TableCell>{calculateAge(user.dataNascimento)}</TableCell>
+                <TableCell>
+                  {user.cidade}/{user.uf}
+                </TableCell>
+                <TableCell>
+                  <IconButton>
+                    <Edit
+                      onClick={() =>
+                        dispatch(
+                          routeActions.redirectTo(routes.USER, { id: user.id })
+                        )
+                      }
+                    />
+                  </IconButton>
+                  <IconButton>
+                    <DeleteOutline />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
-    </>
+        </TableBody>
+      </Table>
+    </Paper>
   );
 };
 
