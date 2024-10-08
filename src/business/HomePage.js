@@ -5,6 +5,7 @@ import {
 } from "../reducers/routes.actions";
 import { DeleteOutline, Edit } from "@mui/icons-material";
 import {
+  Button,
   IconButton,
   Paper,
   Table,
@@ -34,6 +35,12 @@ const HomePage = () => {
       <Typography variant="h4" textAlign="center">
         Usuários
       </Typography>
+      <Button
+        variant="contained"
+        onClick={() => dispatch(routeActions.redirectTo(routes.CREATE))}
+      >
+        Criar Usuário
+      </Button>
       <Table>
         <TableHead>
           <TableRow>
@@ -48,10 +55,10 @@ const HomePage = () => {
           {data.map((user) => {
             return (
               <TableRow key={user.id} variant="data">
-                <TableCell>{user.nome}</TableCell>
-                <TableCell>{calculateAge(user.dataNascimento)}</TableCell>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{calculateAge(user.birthDate)}</TableCell>
                 <TableCell>
-                  {user.cidade}/{user.uf}
+                  {user.city}/{user.state}
                 </TableCell>
                 <TableCell>
                   <IconButton>

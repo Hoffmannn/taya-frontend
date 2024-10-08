@@ -16,10 +16,8 @@ const loadUsers = asyncFlow({
   actionGenerator: actions.loadUsers,
   api: () => {
     return request({
-      url: `/usuarios`,
+      url: `/users/`,
       method: "get",
-      isMock: true,
-      mockResult: usersMock,
     });
   },
   postSuccess: function* ({ response }) {},
@@ -33,11 +31,9 @@ const deleteUser = asyncFlow({
   },
   api: ({ id, ...values }) => {
     return request({
-      url: `/usuario/${id}`,
+      url: `/users/${id}`,
       method: "delete",
       body: values,
-      isMock: true,
-      mockResult: {},
     });
   },
 });

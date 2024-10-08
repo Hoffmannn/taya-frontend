@@ -16,7 +16,7 @@ const reducer = (state = initialState, action) => {
         data:
           action.type === actions.loadUsers.SUCCESS
             ? action.payload.response.data.sort(
-                (a, b) => a.dataNascimento - b.dataNascimento
+                (a, b) => new Date(a.birthDate) - new Date(b.birthDate)
               )
             : [],
       };

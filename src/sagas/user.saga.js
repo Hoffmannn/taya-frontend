@@ -24,10 +24,8 @@ const loadUser = asyncFlow({
   },
   api: (values) => {
     return request({
-      url: `/usuario/${values.id}`,
+      url: `/users/${values.id}`,
       method: "get",
-      isMock: true,
-      mockResult: usersMock.find((u) => u.id === values.id) ?? null,
     });
   },
   postSuccess: function* ({ response }) {
@@ -43,10 +41,27 @@ const saveUser = asyncFlow({
   },
   api: ({ id, ...values }) => {
     return request({
-      url: `/usuario/${id}`,
+      url: `/users/`,
       method: "put",
-      body: values,
-      isMock: true,
+      body: { id, ...values },
+      mockResult: {},
+    });
+  },
+  postSuccess: function* () {
+    yield put(routeActions.redirectTo(routes.HOME));
+  },
+});
+
+const createUser = asyncFlow({
+  actionGenerator: actions.createUser,
+  transform: function* (payload) {
+    return payload;
+  },
+  api: ({ ...values }) => {
+    return request({
+      url: `/users/`,
+      method: "post",
+      body: { ...values },
       mockResult: {},
     });
   },
@@ -59,4 +74,5 @@ export const sagas = [
   userRouteWatcher(),
   loadUser.watcher(),
   saveUser.watcher(),
+  createUser.watcher(),
 ];

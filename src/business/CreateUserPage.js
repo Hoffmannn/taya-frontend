@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { actions } from "../reducers/user.actions";
-import { actions as homeActions } from "../reducers/home.actions";
 import {
   actions as routeActions,
   types as routes,
@@ -20,7 +19,7 @@ import { ArrowBack } from "@mui/icons-material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useEffect } from "react";
 
-const UserPage = () => {
+const CreateUserPage = () => {
   const dispatch = useDispatch();
   const { loading, data } = useSelector((state) => state.user);
   const rules = {};
@@ -51,7 +50,7 @@ const UserPage = () => {
     });
   };
   const handleSubmit = () => {
-    dispatch(homeActions.saveUser.request(formProps.getValues()));
+    dispatch(actions.createUser.request(formProps.getValues()));
   };
 
   useEffect(() => {
@@ -59,7 +58,7 @@ const UserPage = () => {
   }, [data]);
 
   if (loading) {
-    return <div>Carregando usuário</div>;
+    return <div>Carregando</div>;
   }
 
   return (
@@ -70,7 +69,7 @@ const UserPage = () => {
             onClick={() => dispatch(routeActions.redirectTo(routes.HOME))}
           />
         </IconButton>
-        <Typography variant="h4">Editar usuário</Typography>
+        <Typography variant="h4">Criar usuário</Typography>
       </Box>
       <Paper style={{ width: "fit-content", padding: 20 }}>
         <form
@@ -115,7 +114,7 @@ const UserPage = () => {
             onClick={handleSubmit}
             disabled={loading}
           >
-            Salvar
+            Criar
           </Button>
         </form>
       </Paper>
@@ -123,4 +122,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default CreateUserPage;

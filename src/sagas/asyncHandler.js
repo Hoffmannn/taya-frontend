@@ -1,4 +1,4 @@
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, fork, put, take, takeEvery } from "redux-saga/effects";
 import { handleApiErrors } from "../utils/api";
 
 export const apiWrapper = (apiPromise) => {
@@ -10,6 +10,16 @@ export const apiWrapper = (apiPromise) => {
 export const genericErrorHandler = ({ error }) => {
   console.log({ error });
 };
+
+function* takeOneAndBlock(pattern, worker, ...args) {
+  const task = yield fork(function* () {
+    while (true) {
+      const action = yield take(pattern);
+      yield call(worker, ...args, action);
+    }
+  });
+  return task;
+}
 
 const asyncFlow = ({
   actionGenerator,
@@ -68,7 +78,7 @@ const asyncFlow = ({
       }
     },
     watcher: function* () {
-      yield takeEvery(actionGenerator.REQUEST, this.handler);
+      yield takeOneAndBlock(actionGenerator.REQUEST, this.handler);
     },
   };
 };
